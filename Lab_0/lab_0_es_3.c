@@ -15,7 +15,7 @@ int main() {
     printf("Inserire la lunghezza del vettore (massimo %d): ", maxN);
 
     scanf("%d", &array_length);
-    if (array_length > 30) {
+    if (array_length > maxN) {
         printf("\nLunghezza vettore superata");
         exit(98);
     }
