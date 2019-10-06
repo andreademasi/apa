@@ -9,4 +9,4 @@ include_directories(Lab_01)
 
 add_executable(apa
 
-        Lab_0/lab_0_es_2.c)
+        Lab_01/lab_1_es_2.c)
