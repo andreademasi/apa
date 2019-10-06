@@ -41,10 +41,9 @@ int conta(char S[20], int n) {
                 tolower(S[j + i]) == 'o' || tolower(S[j + i]) == 'u') {
                 vowels++;
             }
-            if (vowels == 2) {
-                words++;
-                break;
-            }
+        }
+        if (vowels == 2) {
+            words++;
         }
         vowels = 0;
     }
