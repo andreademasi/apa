@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 include_directories(Lab_0)
 include_directories(Lab_01)
+include_directories(Lab_02)
 
 add_executable(apa
 
-        Lab_01/lab_1_es_2.c)
+        Lab_02/lab_2_es_1.c)
