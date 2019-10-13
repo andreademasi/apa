@@ -24,17 +24,12 @@ int lookRight(int m[MAX][MAX], int i, int j, int colonne);
 int lookDown(int m[MAX][MAX], int i, int j, int righe);
 
 int main() {
-
-
-    int matrix[MAX][MAX], righe, colonne, *row_p, *column_p, i, j, max_base = 0, max_altezza = 0,
+    int matrix[MAX][MAX], righe, colonne, i, j, max_base = 0, max_altezza = 0,
             max_area = 0, base, altezza, area;
 
     MaxRegioni maxregioni[3]; //0 = max base, 1 = max altezza, 2 = max area
 
-    row_p = &righe;
-    column_p = &colonne;
-
-    openFile(matrix, row_p, column_p);
+    openFile(matrix, &righe, &colonne);
 
     for (i = 0; i < righe; i++) {
         for (j = 0; j < colonne; j++) {

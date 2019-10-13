@@ -12,13 +12,10 @@ void ruota(int m[30][30], int righe, int colonne, int indice, char direzione[9],
 
 int main() {
 
-    int matrix[30][30], righe, colonne, *row_p, *column_p, indice, posizioni;
+    int matrix[30][30], righe, colonne, indice, posizioni;
     char selettore[8], direzione[9];
 
-    row_p = &righe;
-    column_p = &colonne;
-
-    openFile(matrix, row_p, column_p);
+    openFile(matrix, &righe, &colonne);
     printf("\nFormato: <selettore> <indice> <direzione> <posizioni>\nInserire comando: ");
     while (1) {
         scanf("%s %d %s %d", selettore, &indice, direzione, &posizioni);
