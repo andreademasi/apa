@@ -59,12 +59,20 @@ char *cercaRegexp(char *src, char *regexp) {
                     if (foundk == 0)
                         break;
                 } else {
-                    if (src[i + j] == regexp[n + 2]) {
-                        break;
+                    k = 0;
+                    foundk = 0;
+                    while (regexp[n + k + 2] != ']') {
+                        if (src[i + j] == regexp[n + k + 2]) {
+                            foundk = 1;
+                            m++;
+                        }
+                        k++;
                     }
-                    if (j == explen - 1)
+                    n += k + 3;
+                    if (n == explen - 1)
                         return src + i;
-                    n += 4;
+                    if (foundk == 1)
+                        break;
                 }
             } else if (regexp[n] == '\\' && regexp[n + 1] == 'a') {
                 if (!islower(src[i + j]))
