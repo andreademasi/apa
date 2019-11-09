@@ -156,7 +156,7 @@ int ITEMlt(Corsa *A, Corsa *B, comando_e cmd) {
             if (strcmp(A->data, B->data) < 0)
                 return 1;
             else if (strcmp(A->data, B->data) == 0) {
-                if (A->ora_partenza < B->ora_arrivo)
+                if (A->ora_partenza < B->ora_partenza)
                     return 1;
                 return 0;
             }
