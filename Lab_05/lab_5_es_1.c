@@ -1,7 +1,7 @@
 //
 // Created by Andrea De Masi on 08/11/19.
 //
-/*
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,19 +13,23 @@ typedef struct {
 
 friend *ReadSongs(int *friends);
 
-int princ_molt(int pos, friend *val, char *sol, int n, int count);
+int princ_molt(int pos, friend *val, char **sol, int n, int count);
 
 int main() {
-    int friends;
+    int friends, i;
 
     friend *proposed_songs = ReadSongs(&friends);
 
-    char sol[5][255];
+    char **sol = malloc(friends * sizeof(char *));
+    for (i = 0; i < friends; i++)
+        sol[i] = malloc(255 * sizeof(char));
 
-    printf("Ci sono %d soluzioni", princ_molt(0, proposed_songs, *sol, friends, 0));
+    printf("Ci sono %d soluzioni", princ_molt(0, proposed_songs, sol, friends, 0));
 
     free(proposed_songs);
-
+    for (i = 0; i < friends; i++)
+        free(sol[i]);
+    free(sol);
 }
 
 friend *ReadSongs(int *friends) {
@@ -47,17 +51,18 @@ friend *ReadSongs(int *friends) {
     return proposed_songs;
 }
 
-int princ_molt(int pos, friend *val, char *sol, int n, int count) {
+int princ_molt(int pos, friend *val, char **sol, int n, int count) {
     int i;
     if (pos >= n) {
-            printf("%s ", sol);
+        printf("Playlist %d:\n", count + 1);
+        for (i = 0; i < n; i++)
+            printf("%s ", sol[i]);
         printf("\n");
         return count + 1;
     }
     for (i = 0; i < val[pos].n; i++) {
-        strcpy(&sol[pos], val[pos].songs[i]);
+        strcpy(sol[pos], val[pos].songs[i]);
         count = princ_molt(pos + 1, val, sol, n, count);
     }
     return count;
 }
- */
