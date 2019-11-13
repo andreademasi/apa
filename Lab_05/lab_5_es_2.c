@@ -10,7 +10,7 @@ int **malloc2dR(int *nr, int *nc);
 void separa(int **mat, int nr, int nc, int *blacks, int *whites);
 
 int main() {
-    int **matrix, nr, nc, i, m = 0, n = 0, *blacks, *whites;
+    int **matrix, nr, nc, i, *blacks, *whites;
 
     matrix = malloc2dR(&nr, &nc);
 
