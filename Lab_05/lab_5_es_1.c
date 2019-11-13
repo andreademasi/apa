@@ -1,6 +1,7 @@
 //
 // Created by Andrea De Masi on 08/11/19.
 //
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,3 +60,4 @@ int princ_molt(int pos, friend *val, char *sol, int n, int count) {
     }
     return count;
 }
+ */
