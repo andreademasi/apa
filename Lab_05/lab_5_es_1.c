@@ -8,7 +8,7 @@
 
 typedef struct {
     int n;
-    char songs[5][255];
+    char **songs;
 } friend;
 
 friend *ReadSongs(int *friends);
@@ -34,13 +34,19 @@ int main() {
 
 friend *ReadSongs(int *friends) {
     FILE *fp;
-    int songs, i, j = 0;
+    int songs, i, k, j = 0;
 
     fp = fopen("/home/andrea/apa/Lab_05/brani.txt", "r");
 
     fscanf(fp, "%d", friends);
 
     friend *proposed_songs = malloc(*friends * sizeof(friend));
+
+    for (k = 0; k < *friends; k++) { // Allocazione dinamica array di stringhe all'interno delle struct
+        proposed_songs[k].songs = malloc(*friends * sizeof(char *));
+        for (i = 0; i < *friends; i++)
+            proposed_songs[k].songs[i] = malloc(255 * sizeof(char));
+    }
 
     while (fscanf(fp, "%d", &songs) != EOF) {
         for (i = 0; i < songs; i++)
