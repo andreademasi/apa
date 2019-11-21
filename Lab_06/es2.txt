@@ -1,0 +1,4 @@
+A1234 Mario Rossi 01/01/1970 via_roma Torino 10100
+A1395 Rosa Milanesi 16/09/1963 via_lecce Milano 10101
+A8973 Giuliano Cremonesi 04/10/1989 via_milano Roma 10122
+A7967 Matteo Pezzuto 14/03/1999 via_Cosenza Parma 10133
