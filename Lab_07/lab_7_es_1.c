@@ -15,15 +15,18 @@ int disp_rip(int pos, Gem val[], char *sol, int n, int k, int count);
 int pruning(const char *sol, int i, char value);
 
 int main() {
-    int z = 2, s = 3, r = 1, t = 2;
+    int z = 3, s = 10, r = 1, t = 6, i, temp, count = 0;
     char *sol;
     Gem val[4] = {'Z', z, 'S', s, 'R', r, 'T', t};
 
     sol = malloc((t + s + z + r) * sizeof(char));
 
-    printf("Lunghezza massima collana: %d\n", z + s + r + t);
-
-    disp_rip(0, val, sol, 4, t + s + z + r, 0);
+    for (i = 0; i < z + s + r + t; i++) {
+        temp = disp_rip(0, val, sol, 4, i, 0);
+        if (temp == 1)
+            count++;
+    }
+    printf("Lunghezza massima collana: %d\n", count - 1);
 }
 
 int disp_rip(int pos, Gem val[], char *sol, int n, int k, int count) {
@@ -32,9 +35,15 @@ int disp_rip(int pos, Gem val[], char *sol, int n, int k, int count) {
         for (i = 0; i < k; i++)
             printf("%c ", sol[i]);
         printf("\n");
-        return count + 1;
+        return count = 1;
     }
     for (i = 0; i < n; i++) {
+        if (pos == 0) {
+            sol[pos] = val[i].type;
+            val[i].amount--;
+            count = disp_rip(pos + 1, val, sol, n, k, count);
+            val[i].amount++;
+        }
         if (val[i].amount > 0 && !pruning(sol, pos - 1, val[i].type)) { // PRUNING
             sol[pos] = val[i].type;
             val[i].amount--;
