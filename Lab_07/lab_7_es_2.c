@@ -20,7 +20,7 @@ typedef struct {
 
 temp_sol disp_rip(int pos, Gem gems[], char *sol, temp_sol temp, int n, int k, int count, int max_rip);
 
-int pruning(const char *sol, int i, char value);
+int pruning(const char *sol, int i, char value, int max_rip);
 
 int main() {
     int z, s, r, t, i, max_rip, n, val_z, val_s, val_t, val_r;
@@ -52,7 +52,7 @@ int main() {
                z, val_z, r, val_r, t, val_t, s, val_s, z + r + t + s, max_rip);
         printf("\nSoluzione ottima di valore %d usando %d gemma/e\n"
                "Composizione collana: %s", best.value, best.amount,
-               best.necklace); // La collana viene stampata al contrario rispetto al risultato
+               best.necklace);
         n++;
         free(initial.necklace);
         free(best.necklace);
@@ -79,7 +79,7 @@ temp_sol disp_rip(int pos, Gem gems[], char *sol, temp_sol temp, int n, int k, i
                     break;
             }
         }
-        if (n_z <= n_s && n_r <= max_rip && n_s <= max_rip && n_t <= max_rip && n_z <= max_rip) {
+        if (n_z <= n_s) {
             for (i = 0; i < k; i++)
                 current_value = gems[0].value * n_z + gems[1].value * n_s + gems[2].value * n_r + gems[3].value * n_t;
             if (temp.value < current_value) {
@@ -92,12 +92,7 @@ temp_sol disp_rip(int pos, Gem gems[], char *sol, temp_sol temp, int n, int k, i
         return temp;
     }
     for (i = 0; i < n; i++) {
-        if (pos == 0) {
-            sol[pos] = gems[i].type;
-            gems[i].amount--;
-            temp = disp_rip(pos + 1, gems, sol, temp, n, k, count, max_rip);
-            gems[i].amount++;
-        } else if (gems[i].amount > 0 && !pruning(sol, pos - 1, gems[i].type)) { // PRUNING
+        if (gems[i].amount > 0 && !pruning(sol, pos - 1, gems[i].type, max_rip)) { // PRUNING
             sol[pos] = gems[i].type;
             gems[i].amount--;
             temp = disp_rip(pos + 1, gems, sol, temp, n, k, count, max_rip);
@@ -107,7 +102,18 @@ temp_sol disp_rip(int pos, Gem gems[], char *sol, temp_sol temp, int n, int k, i
     return temp;
 }
 
-int pruning(const char *sol, int i, char value) {
+int pruning(const char *sol, int i, char value, int max_rip) {
+    int j, count = 0;
+    if (i + 1 >= max_rip) {
+        for (j = 0; j <= max_rip; j++) {
+            if (sol[i - j] == sol[i])
+                count++;
+            else
+                break;
+        }
+        if (count >= max_rip && sol[i] == value)
+            return 1;
+    }
     switch (sol[i]) {
         case 'Z':
             if (value != 'Z' && value != 'R')
