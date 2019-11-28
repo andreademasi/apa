@@ -305,7 +305,6 @@ void editInv(tabPg_t *tabPg, tabInv_t *tabInv) {
                     if (strcmp(nome_oggetto, x->pg.equip.vettEq[i]->nome) == 0) {
                         for (j = i; j < x->pg.equip.inUso - 1; j++)
                             x->pg.equip.vettEq[j] = x->pg.equip.vettEq[j + 1];
-                        //x->pg.equip.vettEq[i] = NULL;
                         x->pg.equip.inUso--;
                         found = 1;
                     }
