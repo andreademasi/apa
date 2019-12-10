@@ -19,7 +19,7 @@ Tile *openTiles();
 
 Tile **openBoard(Tile *tiles, int *mark);
 
-int perm_sempl(int pos, Tile **sol, int *mark, int count, Tile **board, Tile *tiles);
+int disp_sempl(int pos, Tile **sol, int *mark, int count, Tile **board, Tile *tiles);
 
 int tiles_n, rows, columns, best_board_value = 0;
 Tile **best_board;
@@ -40,7 +40,7 @@ int main() {
     for (i = 0; i < rows; i++)
         best_board[i] = (Tile *) malloc(columns * sizeof(Tile));
 
-    perm_sempl(0, sol, mark, 0, board, tiles);
+    disp_sempl(0, sol, mark, 0, board, tiles);
 
     printf("%d\n", best_board_value);
 
@@ -120,9 +120,9 @@ Tile **openBoard(Tile *tiles, int *mark) {
     return board;
 }
 
-int perm_sempl(int pos, Tile **sol, int *mark, int count, Tile **board, Tile *tiles) {
+int disp_sempl(int pos, Tile **sol, int *mark, int count, Tile **board, Tile *tiles) {
     int i, j, r, c, rows_value = 0, columns_value = 0, temp = 0;
-    if (pos >= tiles_n) {
+    if (pos >= rows * columns) {
         for (i = 0; i < rows; i++) {
             for (j = 0; j < columns; j++) {
                 if (j == 0)
@@ -168,15 +168,15 @@ int perm_sempl(int pos, Tile **sol, int *mark, int count, Tile **board, Tile *ti
             if (board[r][c].horizontal.color == 'X') { // Pedina non presente nella scacchiera
                 mark[i] = 1;
                 sol[r][c] = tiles[i];
-                count = perm_sempl(pos + 1, sol, mark, count, board, tiles);
+                count = disp_sempl(pos + 1, sol, mark, count, board, tiles);
 
                 sol[r][c].vertical = tiles[i].horizontal; // ruoto la pedina
                 sol[r][c].horizontal = tiles[i].vertical;
-                count = perm_sempl(pos + 1, sol, mark, count, board, tiles);
+                count = disp_sempl(pos + 1, sol, mark, count, board, tiles);
                 mark[i] = 0;
             } else {
                 sol[r][c] = board[r][c]; // Pedina già presente nella scacchiera
-                perm_sempl(pos + 1, sol, mark, count, board, tiles);
+                disp_sempl(pos + 1, sol, mark, count, board, tiles);
             }
         }
     return count;
