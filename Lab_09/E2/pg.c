@@ -15,6 +15,6 @@ int pg_read(FILE *fp, pg_t *pgp) {
                   &pgp->b_stat.mp, &pgp->b_stat.atk, &pgp->b_stat.def, &pgp->b_stat.mag, &pgp->b_stat.spr);
 }
 
-void pg_updateEquip(pg_t *pgp, invArray_t invArray){
+void pg_updateEquip(pg_t *pgp, invArray_t invArray) {
     equipArray_update(pgp->equip, invArray);
 }

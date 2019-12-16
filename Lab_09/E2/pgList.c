@@ -24,7 +24,7 @@ pgList_t pgList_init() {
     return p;
 }
 
-void pgList_free(pgList_t pgList){
+void pgList_free(pgList_t pgList) {
     link x, p;
     for (x = pgList->headPg, p = NULL; x != NULL; p = x, x = x->next)
         free(p);
@@ -75,8 +75,9 @@ pg_t *pgList_searchByCode(pgList_t pgList, char *cod) {
     return NULL;
 }
 
-void pgList_remove(pgList_t pgList, char* cod){
-    link x, p; int found = 0;
+void pgList_remove(pgList_t pgList, char *cod) {
+    link x, p;
+    int found = 0;
     for (x = pgList->headPg, p = NULL; x != NULL && found == 0; p = x, x = x->next) {
         if (strcmp(x->pg.cod, cod) == 0) {
             found = 1;

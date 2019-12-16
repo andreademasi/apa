@@ -20,9 +20,9 @@ void stat_print(FILE *fp, stat_t *statp, int soglia) {
     stats[5] = statp->spr;
 
     for (i = 0; i < 6; i++)
-        if(stats[i] < soglia)
+        if (stats[i] < soglia)
             stats[i] = 1;
 
-    fprintf(fp,"HP: %d MP: %d ATK: %d DEF: %d MAG: %d SPR: %d\n", stats[0], stats[1], stats[2], stats[3], stats[4],
-           stats[5]);
+    fprintf(fp, "HP: %d MP: %d ATK: %d DEF: %d MAG: %d SPR: %d\n", stats[0], stats[1], stats[2], stats[3], stats[4],
+            stats[5]);
 }
