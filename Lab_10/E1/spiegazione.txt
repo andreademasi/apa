@@ -1,0 +1,7 @@
+La soluzione si basa sulla definizione di quattro funzioni, una per ogni tipologia di gemma, nella forma: fX(z,r,t,s).
+Tali funzioni definiscono le regole di composizione per una collana iniziante con una gemma di tipo X, a fronte di z,r,t,s unità per ogni gemma disponibile.
+Il valore di ritorno di fX è la lunghezza della massima collana componibile, data la quaterna in input, iniziando con una gemma di tipo X.
+Tali funzioni hanno un evidente caso terminale: se la gemma associata a ogni funzione non è disponibile,
+ la funzione ritorna 0 poiché non esiste una collana iniziante con gemma X se non vi sono gemme di quel tipo usabili.
+Per rendere più efficiente l'algoritmo, i risultati già calcolati per una certa funzione fX sono memorizzati in una corrispettiva matrice 4-dimensionale X[z][r][t][s].
+La soluzione al problema è il massimo tra i valori di ritorno delle funzioni così definite.
