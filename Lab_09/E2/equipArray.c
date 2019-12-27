@@ -18,6 +18,10 @@ equipArray_t equipArray_init() {
     return e;
 }
 
+void equipArray_free(equipArray_t equipArray) {
+    free(equipArray);
+}
+
 int equipArray_inUse(equipArray_t equipArray) {
     return equipArray->inUso;
 }

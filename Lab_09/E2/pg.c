@@ -18,3 +18,14 @@ int pg_read(FILE *fp, pg_t *pgp) {
 void pg_updateEquip(pg_t *pgp, invArray_t invArray) {
     equipArray_update(pgp->equip, invArray);
 }
+
+void pg_clean(pg_t *pgp) {
+    equipArray_free(pgp->equip);
+    pgp->eq_stat.atk = 0;
+    pgp->eq_stat.atk = 0;
+    pgp->eq_stat.def = 0;
+    pgp->eq_stat.hp = 0;
+    pgp->eq_stat.mp = 0;
+    pgp->eq_stat.mag = 0;
+    pgp->eq_stat.spr = 0;
+}

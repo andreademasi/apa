@@ -104,7 +104,7 @@ void solveDP(att *val, int n) {
                 L[i] += val[j].fine - val[j].inizio;
                 P[i] = j;
             }
-        if (ris <= L[i]) {
+        if (ris < L[i]) {
             ris = L[i];
             last = i;
         }
