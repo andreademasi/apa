@@ -171,12 +171,12 @@ void GRAPHstore(Graph G, FILE *fout, int flag) {
     }
 }
 
-int GRAPHgetIndex(Graph G, char *label) {
+int GRAPHgetIndex(Graph G, char *label, char *network_id) {
     int id;
     id = STsearch(G->tab, label);
     if (id == -1) {
         id = STsize(G->tab);
-        STinsert(G->tab, label, id);
+        STinsert(G->tab, label, network_id, id);
     }
     return id;
 }

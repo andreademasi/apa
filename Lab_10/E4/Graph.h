@@ -21,7 +21,7 @@ void GRAPHinsertE(Graph G, int id1, int id2, int wt);
 
 void GRAPHstore(Graph G, FILE *fout, int flag);
 
-int GRAPHgetIndex(Graph G, char *label);
+int GRAPHgetIndex(Graph G, char *label, char *network_id);
 
 void GRAPHedges(Graph G, Edge *a);
 
