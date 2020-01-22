@@ -7,12 +7,12 @@
 struct TITOLO_Struct {
     Key code;
     float min, max;
-    BSTquotazioni bstQuotazioni;
+    BSTquotations quotationsBST;
 };
 
 void TITOLOprint(FILE *out, Titolo t) {
     fprintf(out, "%s QUOTAZIONE MIN = %f / MAX = %f\n", t->code, t->min, t->max);
-    BSTprint(t->bstQuotazioni, out);
+    BSTprint(t->quotationsBST, out);
 }
 
 int TITOLOcmp(Key t1, Key t2) {
@@ -24,22 +24,22 @@ Key TITOLOgetKey(Titolo t) {
 }
 
 Titolo TITOLOnew(char *cod) {
-    Titolo t = malloc(sizeof *t);
+    Titolo t = calloc(1, sizeof *t);
     t->code = (Key) strdup(cod);
     t->min = t->max = -1.0;
-    t->bstQuotazioni = BSTInit();
+    t->quotationsBST = BSTInit();
     return t;
 }
 
 static void updateMinmax(Titolo t) {
     float min = -1.0, max = -1.0;
-    BSTgetMinMax(t->bstQuotazioni, &min, &max);
+    BSTgetMinMax(t->quotationsBST, &min, &max);
     t->min = min;
     t->max = max;
 }
 
-void TITOLOinsertTransazione(Titolo t, Date d, float val, int qta) {
-    BSTInsert_leafR(t->bstQuotazioni, d, val, qta);
+void TITOLOaddTransaction(Titolo t, Date d, float valore, int qta) {
+    BSTInsert_leafR(t->quotationsBST, d, valore, qta);
     updateMinmax(t);
 }
 
@@ -56,7 +56,7 @@ float TITOLOmax(Titolo t) {
 }
 
 static void valRange(Titolo t, Date d1, Date d2, float *f1, float *f2) {
-    BSTMinmaxRange(t->bstQuotazioni, d1, d2, f1, f2);
+    BSTMinmaxRange(t->quotationsBST, d1, d2, f1, f2);
 }
 
 void TITOLOinRangeminmax(Titolo t, Date d1, Date d2, float *f1, float *f2) {
@@ -66,17 +66,17 @@ void TITOLOinRangeminmax(Titolo t, Date d1, Date d2, float *f1, float *f2) {
     else if (cmp > 0)
         valRange(t, d2, d1, f1, f2);
     else
-        *f1 = *f2 = QUOTATIONgetValue(BSTSearch(t->bstQuotazioni, d1));
+        *f1 = *f2 = QUOTATIONgetValue(BSTSearch(t->quotationsBST, d1));
 }
 
-Quotation TITOLOgetQuotazione(Titolo t, Date d) {
-    if (t == NULL || t->bstQuotazioni == NULL)
+Quotation TITOLOquotation(Titolo t, Date d) {
+    if (t == NULL || t->quotationsBST == NULL)
         return QUOTATIONsetNull();
-    return BSTSearch(t->bstQuotazioni, d);
+    return BSTSearch(t->quotationsBST, d);
 }
 
 void TITOLOtreeBalance(Titolo t) {
-    if (t == NULL || t->bstQuotazioni == NULL)
+    if (t == NULL || t->quotationsBST == NULL)
         return;
-    BSTbalance(t->bstQuotazioni);
+    BSTbalance(t->quotationsBST);
 }

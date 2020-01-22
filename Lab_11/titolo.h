@@ -20,7 +20,7 @@ Key TITOLOgetKey(Titolo t);
 
 Titolo TITOLOnew(char *cod);
 
-void TITOLOinsertTransazione(Titolo t, Date d, float valore, int qta);
+void TITOLOaddTransaction(Titolo t, Date d, float valore, int qta);
 
 float TITOLOmin(Titolo t);
 
@@ -28,7 +28,7 @@ float TITOLOmax(Titolo t);
 
 void TITOLOinRangeminmax(Titolo t, Date d1, Date d2, float *f1, float *f2);
 
-Quotation TITOLOgetQuotazione(Titolo t, Date d);
+Quotation TITOLOquotation(Titolo t, Date d);
 
 void TITOLOtreeBalance(Titolo t);
 

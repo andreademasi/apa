@@ -23,7 +23,7 @@ void FileRead(char *fin, titoli_collection LISTtitoli) {
 
         for (i = 0; i < quote; i++) {
             fscanf(fp, "%s %s %f %d\n", date, trash, &value, &amount);
-            TITOLOinsertTransazione(t, DATEload(date), value, amount);
+            TITOLOaddTransaction(t, DATEload(date), value, amount);
         }
     }
 
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
                 if (t != NULL) {
                     printf("Inserire data: ");
                     scanf("%s", temp_1);
-                    q = TITOLOgetQuotazione(t, DATEload(temp_1));
+                    q = TITOLOquotation(t, DATEload(temp_1));
                     QUOTATIONprint(stdout, q);
                 }
             }

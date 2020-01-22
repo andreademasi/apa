@@ -9,22 +9,22 @@
 
 #define S 2.0
 
-typedef struct binarysearchtree *BSTquotazioni;
+typedef struct binarysearchtree *BSTquotations;
 
-int BSTEmpty(BSTquotazioni bst);
+int BSTEmpty(BSTquotations bst);
 
-Quotation BSTSearch(BSTquotazioni bst, Date d);
+Quotation BSTSearch(BSTquotations bst, Date d);
 
-void BSTInsert_leafR(BSTquotazioni bst, Date d, float val, int qta);
+void BSTInsert_leafR(BSTquotations bst, Date d, float val, int qta);
 
-void BSTMinmaxRange(BSTquotazioni bst, Date d1, Date d2, float *f1, float *f2);
+void BSTMinmaxRange(BSTquotations bst, Date d1, Date d2, float *f1, float *f2);
 
-BSTquotazioni BSTInit();
+BSTquotations BSTInit();
 
-void BSTprint(BSTquotazioni bst, FILE *fp);
+void BSTprint(BSTquotations bst, FILE *fp);
 
-void BSTbalance(BSTquotazioni bst);
+void BSTbalance(BSTquotations bst);
 
-void BSTgetMinMax(BSTquotazioni bst, float *min, float *max);
+void BSTgetMinMax(BSTquotations bst, float *min, float *max);
 
 #endif

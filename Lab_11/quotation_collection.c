@@ -14,12 +14,12 @@ struct binarysearchtree {
     int count;
 };
 
-BSTquotazioni BSTInit() {
-    BSTquotazioni bst = malloc(sizeof *bst);
+BSTquotations BSTInit() {
+    BSTquotations bst = calloc(1, sizeof *bst);
     return bst;
 }
 
-int BSTEmpty(BSTquotazioni bst) {
+int BSTEmpty(BSTquotations bst) {
     if (bst == NULL || bst->root == 0)
         return 1;
     return 0;
@@ -38,12 +38,12 @@ static Quotation searchR(link h, Date d) {
         return searchR(h->r, d);
 }
 
-Quotation BSTSearch(BSTquotazioni bst, Date d) {
+Quotation BSTSearch(BSTquotations bst, Date d) {
     return searchR(bst->root, d);
 }
 
 static link NEW(Date d, float val, int amount, link left, link right) {
-    link l = malloc(sizeof *l);
+    link l = calloc(1, sizeof *l);
     l->q.data = d;
     l->q.num = val * amount;
     l->q.den = amount;
@@ -66,7 +66,7 @@ static void minmax(link h, float *min, float *max) {
         minmax(h->l, min, max);
 }
 
-void BSTgetMinMax(BSTquotazioni bst, float *min, float *max) {
+void BSTgetMinMax(BSTquotations bst, float *min, float *max) {
     if (BSTEmpty(bst))
         return;
     minmax(bst->root, min, max);
@@ -92,7 +92,7 @@ static link insertR(link h, Date d, float val, int amount, int *add) {
     return h;
 }
 
-void BSTInsert_leafR(BSTquotazioni bst, Date d, float val, int qta) {
+void BSTInsert_leafR(BSTquotations bst, Date d, float val, int qta) {
     int add = 0;
     bst->root = insertR(bst->root, d, val, qta, &add);
     if (add) bst->count++;
@@ -108,7 +108,7 @@ static void treePrintR(link h, FILE *fp) {
     treePrintR(h->r, fp);
 }
 
-void BSTprint(BSTquotazioni bst, FILE *fp) {
+void BSTprint(BSTquotations bst, FILE *fp) {
     if (BSTEmpty(bst))
         return;
     treePrintR(bst->root, fp);
@@ -131,7 +131,7 @@ void static treeMinmaxRange(link r, Date d1, Date d2, float *f1, float *f2) {
     }
 }
 
-void BSTMinmaxRange(BSTquotazioni bst, Date d1, Date d2, float *f1, float *f2) {
+void BSTMinmaxRange(BSTquotations bst, Date d1, Date d2, float *f1, float *f2) {
     if (bst == NULL || bst->root == NULL || bst->count == 0)
         return;
     treeMinmaxRange(bst->root, d1, d2, f1, f2);
@@ -191,12 +191,12 @@ static link treePartition(link h, int k) {
     return h;
 }
 
-static void treeBalance(BSTquotazioni bst) {
+static void treeBalance(BSTquotations bst) {
     int k = (bst->count + 1) / 2 - 1;
     bst->root = treePartition(bst->root, k);
 }
 
-void BSTbalance(BSTquotazioni bst) {
+void BSTbalance(BSTquotations bst) {
     int min = -1, max = -1;
     if (BSTEmpty(bst))
         return;

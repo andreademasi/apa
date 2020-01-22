@@ -17,7 +17,7 @@ struct titoli_collection_struct {
 };
 
 titoli_collection Init_TitoliCollection() {
-    titoli_collection titoli = malloc(sizeof *titoli);
+    titoli_collection titoli = calloc(1, sizeof *titoli);
     return titoli;
 }
 
@@ -43,7 +43,7 @@ Titolo Search_TitoliCollection(titoli_collection titoli, char *cod) {
 }
 
 static link NEW(Titolo t, link next) {
-    link l = malloc(sizeof *l);
+    link l = calloc(1, sizeof *l);
     l->t = t;
     l->next = next;
     return l;
