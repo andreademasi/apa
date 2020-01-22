@@ -22,6 +22,6 @@ Date QUOTATIONgetDate(Quotation q);
 
 int QUOTATIONcheckNull(Quotation q);
 
-Quotation QUOTAZIONEsetNull();
+Quotation QUOTATIONsetNull();
 
 #endif

@@ -71,7 +71,7 @@ void TITOLOinRangeminmax(Titolo t, Date d1, Date d2, float *f1, float *f2) {
 
 Quotation TITOLOgetQuotazione(Titolo t, Date d) {
     if (t == NULL || t->bstQuotazioni == NULL)
-        return QUOTAZIONEsetNull();
+        return QUOTATIONsetNull();
     return BSTSearch(t->bstQuotazioni, d);
 }
 

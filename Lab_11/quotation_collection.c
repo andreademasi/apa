@@ -28,7 +28,7 @@ int BSTEmpty(BSTquotazioni bst) {
 static Quotation searchR(link h, Date d) {
     int cmp;
     if (h == NULL)
-        return QUOTAZIONEsetNull();
+        return QUOTATIONsetNull();
     cmp = DATEcmp(d, QUOTATIONgetDate(h->q));
     if (cmp == 0)
         return h->q;

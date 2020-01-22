@@ -6,7 +6,7 @@ int QUOTATIONcheckNull(Quotation q) {
     return (q.den == 0);
 }
 
-Quotation QUOTAZIONEsetNull() {
+Quotation QUOTATIONsetNull() {
     Quotation q = {{-1, -1, -1}, 0.0, 0};
     return q;
 }
