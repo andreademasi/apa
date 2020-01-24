@@ -57,16 +57,16 @@ static void minmax(link h, float *min, float *max) {
     float q = QUOTATIONgetValue(h->q);
 
     if (*min < 0 || *min > q)
-        *min = q;
+        *min = q; // salvo il minimo
     if (*max < 0 || *max < q)
-        *max = q;
-    if (h->r)
+        *max = q; // salvo il massimo
+    if (h->r != NULL)
         minmax(h->r, min, max);
-    if (h->l)
+    if (h->l != NULL)
         minmax(h->l, min, max);
 }
 
-void BSTgetMinMax(BSTquotations bst, float *min, float *max) {
+void BSTMinMax(BSTquotations bst, float *min, float *max) {
     if (BSTEmpty(bst))
         return;
     minmax(bst->root, min, max);
@@ -99,60 +99,63 @@ void BSTInsert_leafR(BSTquotations bst, Date d, float val, int qta) {
 }
 
 
-static void treePrintR(link h, FILE *fp) {
+static void PrintR(link h, FILE *fp) {
     if (h == NULL)
         return;
 
-    treePrintR(h->l, fp); // IN ORDER
+    PrintR(h->l, fp); // visita in order
     QUOTATIONprint(fp, h->q);
-    treePrintR(h->r, fp);
+    PrintR(h->r, fp);
 }
 
 void BSTprint(BSTquotations bst, FILE *fp) {
     if (BSTEmpty(bst))
         return;
-    treePrintR(bst->root, fp);
+    PrintR(bst->root, fp);
 }
 
-void static treeMinmaxRange(link r, Date d1, Date d2, float *f1, float *f2) {
-    int cmp1 = DATEcmp(d1, QUOTATIONgetDate(r->q));
-    int cmp2 = DATEcmp(d2, QUOTATIONgetDate(r->q));
-    float qv;
-    if (cmp1 < 0)
-        treeMinmaxRange(r->l, d1, d2, f1, f2);
-    if (cmp2 > 0)
-        treeMinmaxRange(r->r, d1, d2, f1, f2);
-    if (cmp1 <= 0 && cmp2 >= 0) {
-        qv = QUOTATIONgetValue(r->q);
-        if (*f1 < 0 || *f1 > qv)
-            *f1 = qv;
-        if (*f2 < 0 || *f2 < qv)
-            *f2 = qv;
+void static MinMaxRangeR(link root, Date d1, Date d2, float *f1, float *f2) {
+    int cmpd1 = DATEcmp(d1, QUOTATIONgetDate(root->q));
+    int cmpd2 = DATEcmp(d2, QUOTATIONgetDate(root->q));
+    float quotation;
+    if (cmpd1 < 0)
+        MinMaxRangeR(root->l, d1, d2, f1, f2);
+    if (cmpd2 > 0)
+        MinMaxRangeR(root->r, d1, d2, f1, f2);
+    if (cmpd1 <= 0 && cmpd2 >= 0) {
+        quotation = QUOTATIONgetValue(root->q);
+        if (*f1 < 0 || *f1 > quotation)
+            *f1 = quotation;
+        if (*f2 < 0 || *f2 < quotation)
+            *f2 = quotation;
     }
 }
 
 void BSTMinmaxRange(BSTquotations bst, Date d1, Date d2, float *f1, float *f2) {
     if (bst == NULL || bst->root == NULL || bst->count == 0)
         return;
-    treeMinmaxRange(bst->root, d1, d2, f1, f2);
+    MinMaxRangeR(bst->root, d1, d2, f1, f2);
 }
 
-static int treeMinmaxHeight(link h, int *max, int depth) {
+static int BSTHeight(link h, int *max, int depth) {
     int min_l, min_r;
     if (h == NULL)
         return 0;
     if (h->l == NULL && h->r == NULL) {
-        if (depth > *max)
+        if (depth > *max) // se sono in una foglia a profondità massima (locale) aggiorno max
             *max = depth;
         return 1;
     }
-    min_l = treeMinmaxHeight(h->l, max, depth + 1);
-    min_r = treeMinmaxHeight(h->r, max, depth + 1);
+    min_l = BSTHeight(h->l, max, depth + 1);
+    min_r = BSTHeight(h->r, max, depth + 1);
     if (h->l == NULL)
         return min_r + 1;
     if (h->r == NULL)
         return min_l + 1;
-    return (min_l < min_r) ? min_l + 1 : min_r + 1;
+    if (min_l < min_r) // ritorna il cammino più piccolo
+        return min_l + 1;
+    else
+        return min_r + 1;
 }
 
 link rotR(link h) {
@@ -177,37 +180,38 @@ link rotL(link h) {
     return x;
 }
 
-static link treePartition(link h, int k) {
+static link partR(link h, int r) {
     int t = (h->l) ? h->l->count : 0;
 
-    if (t > k) {
-        h->l = treePartition(h->l, k);
+    if (t > r) {
+        h->l = partR(h->l, r);
         h = rotR(h);
     }
-    if (t < k) {
-        h->r = treePartition(h->r, k - t - 1);
+    if (t < r) {
+        h->r = partR(h->r, r - t - 1);
         h = rotL(h);
     }
     return h;
 }
 
-static void treeBalance(BSTquotations bst) {
-    int k = (bst->count + 1) / 2 - 1;
-    bst->root = treePartition(bst->root, k);
+static void balance(BSTquotations bst) {
+    int k = (bst->count + 1) / 2 - 1; // chiave mediana inferiore
+    bst->root = partR(bst->root, k);
 }
 
 void BSTbalance(BSTquotations bst) {
-    int min = -1, max = -1;
+    int min, max = -1;
     if (BSTEmpty(bst))
         return;
-    min = treeMinmaxHeight(bst->root, &max, 1);
+    min = BSTHeight(bst->root, &max, 1);
     if (bst->root && (bst->root->l == NULL || bst->root->r == NULL))
         min = 0;
     if (min == 0 || ((float) max / (float) min) > S) {
         printf("Pre-bilanciamento min_path = %d max_path = %d\n", min, max);
-        treeBalance(bst);
-        min = max = -1;
-        min = treeMinmaxHeight(bst->root, &max, 1);
+        balance(bst);
+        printf("Bilanciamento completato.\n");
+        max = -1;
+        min = BSTHeight(bst->root, &max, 1);
         printf("Post-bilanciamento min_path = %d max_path = %d\n", min, max);
     }
 }

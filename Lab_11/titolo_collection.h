@@ -18,6 +18,4 @@ void Insert_TitoliCollection(titoli_collection titoli, Titolo t);
 
 titoli_collection Init_TitoliCollection();
 
-void Print_TitoliCollection(titoli_collection titoli, FILE *fp);
-
 #endif

@@ -30,6 +30,6 @@ void TITOLOinRangeminmax(Titolo t, Date d1, Date d2, float *f1, float *f2);
 
 Quotation TITOLOquotation(Titolo t, Date d);
 
-void TITOLOtreeBalance(Titolo t);
+void TITOLOBalance(Titolo t);
 
 #endif

@@ -7,14 +7,14 @@ int QUOTATIONcheckNull(Quotation q) {
 }
 
 Quotation QUOTATIONsetNull() {
-    Quotation q = {{-1, -1, -1}, 0.0, 0};
+    Quotation q = {{-1, -1, -1}, (float) 0.0, 0};
     return q;
 }
 
 static float average(Quotation q) {
     if (q.den != 0)
         return q.num / (float) q.den;
-    return (float) -1.0;
+    return -1;
 }
 
 void QUOTATIONprint(FILE *fp, Quotation q) {

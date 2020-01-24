@@ -64,11 +64,3 @@ void Insert_TitoliCollection(titoli_collection titoli, Titolo t) {
     }
     titoli->count++;
 }
-
-void Print_TitoliCollection(titoli_collection titoli, FILE *fp) {
-    link x;
-    if (Empty_TitoliCollection(titoli))
-        return;
-    for (x = titoli->head; x != NULL; x = x->next)
-        TITOLOprint(fp, x->t);
-}

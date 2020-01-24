@@ -25,6 +25,6 @@ void BSTprint(BSTquotations bst, FILE *fp);
 
 void BSTbalance(BSTquotations bst);
 
-void BSTgetMinMax(BSTquotations bst, float *min, float *max);
+void BSTMinMax(BSTquotations bst, float *min, float *max);
 
 #endif

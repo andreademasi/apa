@@ -33,20 +33,19 @@ void FileRead(char *fin, titoli_collection LISTtitoli) {
 void stampaMenu(char *scelte[], int *selezione) {
     int i = 0;
     printf("\n");
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < 7; i++)
         printf("%d > %s\n", i, scelte[i]);
     scanf(" %d", selezione);
 }
 
-int main(int argc, char **argv) {
+int main() {
     char *scelte[] = {
             "Uscita",
             "Leggi file",
-            "Stampa collezione titoli",
-            "Stampa titolo",
-            "Stampa quotazione",
-            "Stampa MIN/MAX assoluti",
-            "Stampa MIN/MAX intervallo",
+            "Ricerca titolo",
+            "Ricerca quotazione",
+            "Stampa quotazione MIN/MAX in tutto il periodo registrato",
+            "Stampa quotazione MIN/MAX in un intervallo di date",
             "Bilanciamento alberi"
     };
 
@@ -78,11 +77,6 @@ int main(int argc, char **argv) {
                 break;
 
             case 2: {
-                Print_TitoliCollection(titoli, stdout);
-            }
-                break;
-
-            case 3: {
                 printf("Inserire codice titolo: ");
                 scanf("%s", temp_1);
                 t = Search_TitoliCollection(titoli, temp_1);
@@ -91,12 +85,12 @@ int main(int argc, char **argv) {
             }
                 break;
 
-            case 4: {
+            case 3: {
                 printf("Inserire codice titolo: ");
                 scanf("%s", temp_1);
                 t = Search_TitoliCollection(titoli, temp_1);
                 if (t != NULL) {
-                    printf("Inserire data: ");
+                    printf("Inserire data (aaaa/mm/gg): ");
                     scanf("%s", temp_1);
                     q = TITOLOquotation(t, DATEload(temp_1));
                     QUOTATIONprint(stdout, q);
@@ -104,7 +98,7 @@ int main(int argc, char **argv) {
             }
                 break;
 
-            case 5: {
+            case 4: {
                 printf("Inserire codice titolo: ");
                 scanf("%s", temp_1);
                 t = Search_TitoliCollection(titoli, temp_1);
@@ -113,11 +107,12 @@ int main(int argc, char **argv) {
             }
                 break;
 
-            case 6: {
+            case 5: {
                 printf("Inserire codice titolo: ");
                 scanf("%s", temp_1);
                 t = Search_TitoliCollection(titoli, temp_1);
                 if (t != NULL) {
+                    printf("Inserire le date in ordine cronologico\n");
                     printf("Inserire data 1: ");
                     scanf("%s", temp_1);
                     printf("Inserire data 2: ");
@@ -128,12 +123,12 @@ int main(int argc, char **argv) {
             }
                 break;
 
-            case 7: {
+            case 6: {
                 printf("Inserire codice titolo: ");
                 scanf("%s", temp_1);
                 t = Search_TitoliCollection(titoli, temp_1);
                 if (t != NULL)
-                    TITOLOtreeBalance(t);
+                    TITOLOBalance(t);
             }
                 break;
 

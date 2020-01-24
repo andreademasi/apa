@@ -1,6 +1,6 @@
 #ifndef DATE_H_DEFINED
 #define DATE_H_DEFINED
-#define DATELEN 13
+#define DATELEN 11
 
 #include<string.h>
 #include<stdlib.h>
